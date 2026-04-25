@@ -1,55 +1,68 @@
-# IndexEngine
+# Index Engine Performance Benchmark
 
-Database indexing simulation and analysis engine implementing 8 major indexing strategies from CS315 Database Systems.
+This project benchmarks multiple database indexing structures and compares their practical time and space behavior against theoretical complexity.
 
-## Index Structures
+The goal is to study how different indexing methods behave as the total number of records `N` increases from very small datasets to very large datasets.
 
-| # | Index | Type | Key Characteristics |
-|---|-------|------|---------------------|
-| 1 | Sorted Array | Ordered | Binary search O(log n); O(n) insert/delete |
-| 2 | Chained Hash | Hash | Separate chaining; auto-rehash at load > 0.75 |
-| 3 | Linear Probing | Hash | Open addressing; tombstone deletion |
-| 4 | Extendible Hash | Hash | Dynamic directory; local/global depth split |
-| 5 | Bitmap | Bitmap | Bitvector per distinct value; AND/OR queries |
-| 6 | B-Tree | Tree | Keys + data in all nodes; CLRS-style delete |
-| 7 | B+-Tree | Tree | Data only in linked leaves; range queries |
-| 8 | R-Tree | Spatial | MBR-based; quadratic split; range queries |
+# Indexed Structures Covered
 
-## Build & Run
+The benchmark supports the following index implementations:
+
+* Sorted Array Index
+* Chained Hash Index
+* Linear Probing Hash Index
+* Extendible Hash Index
+* Bitmap Index
+* B-Tree Index
+* B+ Tree Index
+* R-Tree Index
+
+Each index is tested independently using a separate benchmark file.
+
+
+# Compilation
+
+Use performance.cpp present in tests folder as a generic file for all indexes and modify it for the index you want to test.
+
+Compile each benchmark separately.
+
+Example for B-Tree:
 
 ```bash
-# Build
-cd me2
-cmake -B build
-cmake --build build
-
-# Run correctness tests
-./build/test_all
-
-# Run benchmarks (generates CSV)
-./build/benchmark_all
-
-# View report
-cat results/benchmark_report.csv
+g++ benchmark_btree.cpp btree_index.cpp -O2 -std=c++17 -o bench_btree
 ```
 
-## Benchmarks
+Example for B+ Tree:
 
-Measures for each index at N = 1K, 10K, 100K:
-- **Search time** (microseconds)
-- **Modification overhead** — insert + delete time (microseconds)
-- **Space overhead** — heap memory after all inserts (bytes)
-
-Results are written to `results/benchmark_report.csv`.
-
-## Project Structure
-
+```bash
+g++ benchmark_bplus_tree.cpp bplus_tree_index.cpp -O2 -std=c++17 -o bench_bplus
 ```
-me2/
-├── CMakeLists.txt
-├── include/          # Header files for all index structures
-├── src/              # Implementation files
-├── tests/            # Correctness test suite
-├── benchmarks/       # Benchmark harness
-└── results/          # Generated CSV reports
+
+Use:
+
+```bash
+-O2
 ```
+
+for optimized and more realistic benchmark results.
+
+---
+
+# Running
+
+Run the executable using:
+
+```bash
+./bench_btree
+```
+
+The terminal will display progress like:
+
+```text
+Testing N = 100
+Testing N = 500
+Testing N = 1000
+...
+```
+
+After completion, the CSV file will be generated in the same folder.
