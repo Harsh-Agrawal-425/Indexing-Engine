@@ -162,7 +162,7 @@ void RTreeIndex::splitNode(Node* node, Node* parent) {
     newEntry.child = newNode;
 
     if (!parent) {
-        // node was root → create new root
+        // node was root - create new root
         Node* newRoot = makeNode(false);
         Entry e1; e1.mbr = computeMBR(node); e1.child = node;
         newRoot->entries.push_back(e1);

@@ -55,7 +55,7 @@ void BTreeIndex::insert(int key, const std::string& value) {
         }
     }
 
-    // Root is full → grow tree height
+    // Root is full - grow tree height
     if ((int)root_->keys.size() == 2 * t_ - 1) {
         Node* s = makeNode(false);
         s->children.push_back(root_);

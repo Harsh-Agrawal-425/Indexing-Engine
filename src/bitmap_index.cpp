@@ -6,7 +6,7 @@ void BitmapIndex::ensureBitmapSize(int key) {
 }
 
 void BitmapIndex::insert(int key, const std::string& value) {
-    // Check if key already exists → update (scan the key's bitmap only)
+    // Check if key already exists - update (scan the key's bitmap only)
     auto it = bitmaps_.find(key);
     if (it != bitmaps_.end()) {
         for (size_t i = 0; i < it->second.size(); ++i) {

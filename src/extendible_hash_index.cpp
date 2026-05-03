@@ -24,7 +24,7 @@ void ExtendibleHashIndex::insert(int key, const std::string& value) {
     size_t idx = dir_index(key);
     auto& bucket = directory_[idx];
 
-    // Check for existing key → update
+    // Check for existing key - update
     for (auto& [k, v] : bucket->entries) {
         if (k == key) { v = value; return; }
     }
@@ -36,7 +36,7 @@ void ExtendibleHashIndex::insert(int key, const std::string& value) {
         return;
     }
 
-    // Bucket is full → split
+    // Bucket is full - split
     split_bucket(idx);
     // Retry insert after split
     insert(key, value);
